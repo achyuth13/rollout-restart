@@ -12,13 +12,41 @@ class RosterSheet {
   final List<Track> tracks;
   final Track finalTrack;
 
-  RosterSheet(
-      {required this.teams, required this.drivers, required this.tracks, required this.finalTrack});
+  late final List<Driver> firstRaceDrivers;
+  late final List<Driver> secondRaceDrivers;
 
-  List<Driver> get firstRaceDrivers => drivers.sublist(0, 5);
-  List<Driver> get secondRaceDrivers => drivers.sublist(5, 10);
   Track get firstRaceTrack => tracks[0];
   Track get secondRaceTrack => tracks[1];
+
+  RosterSheet({
+    required this.teams,
+    required this.drivers,
+    required this.tracks,
+    required this.finalTrack,
+  }) {
+    _distributeDriversToRaces();
+  }
+
+  void _distributeDriversToRaces() {
+    final Map<String, List<Driver>> teamToDrivers = {};
+
+    for (var driver in drivers) {
+      teamToDrivers.putIfAbsent(driver.team.name, () => []).add(driver);
+    }
+
+    firstRaceDrivers = [];
+    secondRaceDrivers = [];
+
+    for (var teamDrivers in teamToDrivers.values) {
+      if (teamDrivers.length >= 2) {
+        firstRaceDrivers.add(teamDrivers[0]);
+        secondRaceDrivers.add(teamDrivers[1]);
+      } else if (teamDrivers.length == 1) {
+        // In case there's only one driver for a team
+        firstRaceDrivers.add(teamDrivers[0]);
+      }
+    }
+  }
 
   static RosterSheet load() {
     final teams = TeamRoster.build();
@@ -26,6 +54,12 @@ class RosterSheet {
     final tracks = TrackRoster.buildInitialTracks();
     final finalTrack = TrackRoster.buildFinalTrack();
 
-    return RosterSheet(teams: teams, drivers: drivers, tracks: tracks, finalTrack: finalTrack);
+    return RosterSheet(
+      teams: teams,
+      drivers: drivers,
+      tracks: tracks,
+      finalTrack: finalTrack,
+    );
   }
 }
+

@@ -69,6 +69,13 @@ class RolloutRestart {
     leaderboard.addAll(finalResults);
   }
 
+  void reset() {
+    raceEngine1.reset();
+    raceEngine2.reset();
+    leaderboard.clear();
+  }
+
+
   List<LeaderboardEntry> getFinalLeaderboard() {
     leaderboard.sort((a, b) => a.position.compareTo(b.position));
     return leaderboard;

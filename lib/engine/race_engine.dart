@@ -72,6 +72,16 @@ class RaceEngine {
     }
   }
 
+  void reset() {
+    for (final dp in race.progressMap.values) {
+      dp.distanceCovered = 0;
+      dp.totalTimeTaken = Duration.zero;
+      dp.currentSegmentIndex = 0;
+    }
+
+    race.isFinished = false;
+  }
+
   double _segmentStartOffset(int index) {
     double offset = 0.0;
     for (int i = 0; i < index; i++) {
