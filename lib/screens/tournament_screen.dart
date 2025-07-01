@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rollout_restart/screens/race_view_host_screen.dart';
 import 'package:rollout_restart/viewmodel/race_cubit.dart';
 import 'package:rollout_restart/viewmodel/tournament_cubit.dart';
@@ -40,7 +39,7 @@ class _TournamentScreenState extends State<TournamentScreen> {
                               tournamentCubit: widget.tournamentCubit
                             )));
               },
-              child: const Text("Start Initial Races")),
+              child: const Text("Start Races")),
         ));
   }
 }

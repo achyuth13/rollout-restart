@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rollout_restart/models/driver_progress.dart';
 import 'package:rollout_restart/viewmodel/race_cubit.dart';
 import 'package:rollout_restart/viewmodel/tournament_state.dart';
 
@@ -55,6 +56,13 @@ class TournamentCubit extends Cubit<TournamentState> {
     repo.tournament.setupFinalRace(topN: 2);
     await repo.tournament.startFinalRace();
     emit(FinalRaceComplete(repo.tournament.getFinalLeaderboard()));
+  }
+
+  List<DriverProgress> getTopDriversProgress(RaceCubit current) {
+    final otherRaceCubit = current == raceCubit1 ? raceCubit2 : raceCubit1;
+    return otherRaceCubit.state.progress.values
+        .toList()
+        ..sort((a,b) => b.distanceCovered.compareTo(a.distanceCovered));
   }
 
   void resetTournament() {

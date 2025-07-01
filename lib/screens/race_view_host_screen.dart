@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rollout_restart/screens/race_view_screen.dart';
 import 'package:rollout_restart/viewmodel/race_cubit.dart';
 
+import '../rosters/roster_sheet.dart';
 import '../viewmodel/tournament_cubit.dart';
 import '../viewmodel/tournament_state.dart';
 
@@ -25,6 +26,7 @@ class RaceViewHostScreen extends StatefulWidget {
 class _RaceViewHostScreenState extends State<RaceViewHostScreen> {
   bool _showRace1 = true;
   bool _showFinalRace = false;
+
 
   @override
   void initState() {
@@ -68,8 +70,8 @@ class _RaceViewHostScreenState extends State<RaceViewHostScreen> {
             children: [
               Expanded(
                 child: _showRace1
-                    ? RaceViewScreen(raceCubit: widget.raceCubit1)
-                    : RaceViewScreen(raceCubit: widget.raceCubit2),
+                    ? RaceViewScreen(raceCubit: widget.raceCubit1, raceTrack: widget.tournamentCubit.repo.tournament.race1.track)
+                    : RaceViewScreen(raceCubit: widget.raceCubit2, raceTrack: widget.tournamentCubit.repo.tournament.race2.track),
               ),
               if (state is InitialRacesComplete && !_showFinalRace)
                 Row(

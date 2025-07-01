@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rollout_restart/repo/race_repo.dart';
 import 'package:rollout_restart/screens/tournament_screen.dart';
+import 'package:rollout_restart/theme.dart';
 import 'package:rollout_restart/viewmodel/race_cubit.dart';
 import 'package:rollout_restart/viewmodel/tournament_cubit.dart';
 
@@ -42,10 +43,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Rollout Restart',
-        theme: ThemeData(
-          primarySwatch: Colors.indigo,
-          useMaterial3: true,
-        ),
+        theme: AppTheme.darkTheme,
         home: TournamentScreen(
           raceCubit1: raceCubit1,
           raceCubit2: raceCubit2,
