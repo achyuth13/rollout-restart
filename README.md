@@ -1,16 +1,33 @@
-# rollout_restart
+# 🏎️ Rollout Restart - Flutter Racing Sim
 
-A new Flutter project.
+This is a **simple racing simulation app** built using **Flutter**. The app runs **two races in parallel**, each between a set of drivers, and visually displays progress along with **top performers** for each race.
 
-## Getting Started
+### 🚀 What it Does
+- Runs **Race 1** and **Race 2** in parallel.
+- Shows live progress for both races.
+- Displays a **Top Performers banner** (podium-style) for the alternate race.
+- Allows you to view all drivers, or see the final **leaderboard** after both races.
+- UI built with Flutter, using `go_router`, `flutter_bloc`, and shared preferences for local state.
 
-This project is a starting point for a Flutter application.
+### 🎯 Why This Exists
+This project was built as a way to:
+- Understand **Flutter’s navigation** (`go_router`)
+- Practice **state management** with `Bloc`
+- Work with custom widgets, animations, and shared preferences
+- Explore parallel UI updates and game logic coordination
 
-A few resources to get you started if this is your first Flutter project:
+### 🧱 Features
+- 🧭 Navigation with `go_router`
+- 🔄 Parallel race execution
+- 🧠 State management with `flutter_bloc`
+- 🏅 Leaderboard and Top Performers logic
+- 💾 Persistent view state (list/grid toggle) via SharedPreferences
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 🧪 How to Run
+Make sure Flutter is set up, then:
+
+```bash
+flutter pub get
+flutter run
+
