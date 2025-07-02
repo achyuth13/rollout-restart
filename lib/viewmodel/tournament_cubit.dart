@@ -17,10 +17,10 @@ class TournamentCubit extends Cubit<TournamentState> {
   }) : super(TournamentInitialState());
 
   Future<void> startInitialRaces() async {
-    emit(InitialRacesRunning());
     const tickInterval = Duration(milliseconds: 100);
 
-    while (!repo.tournament.race1.isFinished || !repo.tournament.race2.isFinished) {
+    while (!repo.tournament.race1.isFinished ||
+        !repo.tournament.race2.isFinished) {
       if (!repo.tournament.race1.isFinished) {
         repo.tournament.raceEngine1.tick(tickInterval);
         raceCubit1.updateProgress(
@@ -37,11 +37,22 @@ class TournamentCubit extends Cubit<TournamentState> {
         );
       }
 
+      // Emit live top 3 from both races
+      final liveRace1 = repo.tournament.raceEngine1.getResults().take(3).toList();
+      final liveRace2 = repo.tournament.raceEngine2.getResults().take(3).toList();
+      
+      emit(InitialRacesRunning(
+        liveRace1: liveRace1,
+        liveRace2: liveRace2,
+      ));
+
       await Future.delayed(tickInterval);
     }
 
-    raceCubit1.updateProgress(repo.tournament.raceEngine1.getProgressMap(), true);
-    raceCubit2.updateProgress(repo.tournament.raceEngine2.getProgressMap(), true);
+    raceCubit1.updateProgress(
+        repo.tournament.raceEngine1.getProgressMap(), true);
+    raceCubit2.updateProgress(
+        repo.tournament.raceEngine2.getProgressMap(), true);
 
     final result1 = repo.tournament.raceEngine1.getResults();
     final result2 = repo.tournament.raceEngine2.getResults();
@@ -60,14 +71,12 @@ class TournamentCubit extends Cubit<TournamentState> {
 
   List<DriverProgress> getTopDriversProgress(RaceCubit current) {
     final otherRaceCubit = current == raceCubit1 ? raceCubit2 : raceCubit1;
-    return otherRaceCubit.state.progress.values
-        .toList()
-        ..sort((a,b) => b.distanceCovered.compareTo(a.distanceCovered));
+    return otherRaceCubit.state.progress.values.toList()
+      ..sort((a, b) => b.distanceCovered.compareTo(a.distanceCovered));
   }
 
   void resetTournament() {
     repo.tournament.reset(); // You need to implement this
     emit(TournamentInitialState());
   }
-
 }

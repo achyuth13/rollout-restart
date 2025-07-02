@@ -19,7 +19,6 @@ class AnimatedCarTrack extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // TRACK STACK
         Expanded(
           child: Stack(
             alignment: Alignment.bottomCenter,

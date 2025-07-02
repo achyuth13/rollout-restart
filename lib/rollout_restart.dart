@@ -77,7 +77,7 @@ class RolloutRestart {
 
 
   List<LeaderboardEntry> getFinalLeaderboard() {
-    leaderboard.sort((a, b) => a.position.compareTo(b.position));
+    leaderboard.sort((a, b) => a.timeTaken.compareTo(b.timeTaken));
     return leaderboard;
   }
 }
