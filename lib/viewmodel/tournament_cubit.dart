@@ -40,7 +40,7 @@ class TournamentCubit extends Cubit<TournamentState> {
       // Emit live top 3 from both races
       final liveRace1 = repo.tournament.raceEngine1.getResults().take(3).toList();
       final liveRace2 = repo.tournament.raceEngine2.getResults().take(3).toList();
-      
+
       emit(InitialRacesRunning(
         liveRace1: liveRace1,
         liveRace2: liveRace2,
@@ -76,7 +76,7 @@ class TournamentCubit extends Cubit<TournamentState> {
   }
 
   void resetTournament() {
-    repo.tournament.reset(); // You need to implement this
+    repo.tournament.reset();
     emit(TournamentInitialState());
   }
 }

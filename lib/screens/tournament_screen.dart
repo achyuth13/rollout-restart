@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rollout_restart/screens/race_view_host_screen.dart';
 import 'package:rollout_restart/viewmodel/race_cubit.dart';
 import 'package:rollout_restart/viewmodel/tournament_cubit.dart';
 
+import '../widgets/custom_elevated_button.dart';
 import 'driver_roster_screen.dart';
 
 enum RaceView { race1, race2 }
@@ -33,28 +35,22 @@ class _TournamentScreenState extends State<TournamentScreen> {
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
            Center(
-             child: ElevatedButton(
-                 onPressed: () {
-                   Navigator.push(context,
-                   MaterialPageRoute(builder: (_) => DriverRosterScreen(drivers: widget.tournamentCubit.repo.rosterSheet.drivers)));
+             child: CustomElevatedButton(
+               onPressed: () => context.push(
+                 '/drivers',
+                 extra: {
+                   'drivers': widget.tournamentCubit.repo.rosterSheet.drivers,
+                   'appBarTitle': 'Driver Roster',
                  },
-                 child: const Text("See drivers")
+               ),
+               text: "See drivers",
              ),
            ),
            const SizedBox(height: 20.0),
            Center(
-             child: ElevatedButton(
-                 onPressed: () {
-                   Navigator.push(
-                       context,
-                       MaterialPageRoute(
-                           builder: (_) => RaceViewHostScreen(
-                               raceCubit1: widget.raceCubit1,
-                               raceCubit2: widget.raceCubit2,
-                               tournamentCubit: widget.tournamentCubit
-                           )));
-                 },
-                 child: const Text("Start Races")),
+             child: CustomElevatedButton(
+                 onPressed: () => context.push('/races'),
+                 text: "Start Races"),
            ),
            const SizedBox(width: 20.0, height: 20.0),
            const Text("Two races will start in parallel")

@@ -24,6 +24,12 @@ class AppTheme {
       bodyColor: textPrimary,
       displayColor: textPrimary,
     ),
+    colorScheme: const ColorScheme.dark(
+      primary: accentColor,           // 🔥 Now this is used by `colorScheme.primary`
+      secondary: Colors.tealAccent,   // Optional
+      background: backgroundColor,
+      surface: surfaceColor,
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: accentColor,

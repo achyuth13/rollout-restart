@@ -20,7 +20,7 @@ class TopPerformersBanner extends StatelessWidget {
       child: Card(
         elevation: 2,
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical()),
         color: Theme.of(context).colorScheme.primary,
         child: Padding(
           padding: const EdgeInsets.all(12),
@@ -56,7 +56,7 @@ class TopPerformersBanner extends StatelessWidget {
                       Text(
                         "${(entry.timeTaken.inMilliseconds / 1000).toStringAsFixed(1)}s",
                         style:
-                            const TextStyle(fontSize: 10, color: Colors.grey),
+                            const TextStyle(fontSize: 10, color: Colors.white),
                       )
                     ],
                   );
