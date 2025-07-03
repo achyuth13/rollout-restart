@@ -9,8 +9,6 @@ This is a **simple racing simulation app** built using **Flutter**. The app runs
 - Allows you to view all drivers, or see the final **leaderboard** after both races.
 - UI built with Flutter, using `go_router`, `flutter_bloc`, and shared preferences for local state.
 
-![Demo](assets/demo.gif)
-
 ### 🎯 Why This Exists
 This project was built as a way to:
 - Understand **Flutter’s navigation** (`go_router`)
