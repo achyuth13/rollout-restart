@@ -75,9 +75,19 @@ class RolloutRestart {
     leaderboard.clear();
   }
 
-
   List<LeaderboardEntry> getFinalLeaderboard() {
     leaderboard.sort((a, b) => a.timeTaken.compareTo(b.timeTaken));
-    return leaderboard;
+    final updated = <LeaderboardEntry>[];
+    for (int i = 0; i < leaderboard.length; i++) {
+      final entry = leaderboard[i];
+      updated.add(LeaderboardEntry(
+        driver: entry.driver,
+        team: entry.team,
+        position: i + 1,
+        timeTaken: entry.timeTaken,
+        points: entry.points,
+      ));
+    }
+    return updated;
   }
 }

@@ -27,12 +27,14 @@ GoRouter appRouter({
         path: '/drivers',
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>;
-          final drivers = extra['drivers'] as List<Driver>;
+          final drivers = extra['drivers'] as Map<String, Driver>;
           final appBarTitle = extra['appBarTitle'] as String;
+          final finalRace = extra['finalRace'] as bool;
 
           return DriverRosterScreen(
             drivers: drivers,
             appBarTitle: appBarTitle,
+            finalRace: finalRace
           );
         },
       ),

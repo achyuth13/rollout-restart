@@ -66,15 +66,9 @@ class _RaceViewHostScreenState extends State<RaceViewHostScreen> {
                     title: _showRace1
                         ? "Top Performers - Race 2"
                         : "Top Performers - Race 1",
-                    topPerformers: _showRace1
-                        ? widget.tournamentCubit.repo.tournament.raceEngine2
-                            .getResults()
-                            .take(3)
-                            .toList()
-                        : widget.tournamentCubit.repo.tournament.raceEngine1
-                            .getResults()
-                            .take(3)
-                            .toList(),
+                      topPerformers: _showRace1
+                          ? context.read<TournamentCubit>().getTopPerformersForRace2()
+                          : context.read<TournamentCubit>().getTopPerformersForRace1(),
                     onTap: () {
                       setState(() {
                         _showRace1 = !_showRace1;
@@ -142,9 +136,7 @@ class _RaceViewHostScreenState extends State<RaceViewHostScreen> {
 }
 
 void _showLeaderBoard(BuildContext context) {
-  final leaderBoard =
-      context.read<TournamentCubit>().repo.tournament.getFinalLeaderboard();
-  final orderedDrivers = leaderBoard.map((entry) => entry.driver).toList();
+  final orderedDrivers = context.read<TournamentCubit>().getFinalLeaderboardDrivers();
   context.push('/drivers',
-      extra: {'drivers': orderedDrivers, 'appBarTitle': "Final Leaderboard"});
+      extra: {'drivers': orderedDrivers, 'appBarTitle': "Final Leaderboard", 'finalRace': true});
 }

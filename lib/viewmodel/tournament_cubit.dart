@@ -3,6 +3,8 @@ import 'package:rollout_restart/models/driver_progress.dart';
 import 'package:rollout_restart/viewmodel/race_cubit.dart';
 import 'package:rollout_restart/viewmodel/tournament_state.dart';
 
+import '../models/driver.dart';
+import '../models/leader_board_entry.dart';
 import '../repo/race_repo.dart';
 
 class TournamentCubit extends Cubit<TournamentState> {
@@ -62,17 +64,24 @@ class TournamentCubit extends Cubit<TournamentState> {
     emit(InitialRacesComplete());
   }
 
-  Future<void> startFinalRace() async {
-    emit(FinalRaceRunning());
-    repo.tournament.setupFinalRace(topN: 2);
-    await repo.tournament.startFinalRace();
-    emit(FinalRaceComplete(repo.tournament.getFinalLeaderboard()));
-  }
-
   List<DriverProgress> getTopDriversProgress(RaceCubit current) {
     final otherRaceCubit = current == raceCubit1 ? raceCubit2 : raceCubit1;
     return otherRaceCubit.state.progress.values.toList()
       ..sort((a, b) => b.distanceCovered.compareTo(a.distanceCovered));
+  }
+
+  List<LeaderboardEntry> getTopPerformersForRace1() =>
+      repo.tournament.raceEngine1.getResults().take(3).toList();
+
+  List<LeaderboardEntry> getTopPerformersForRace2() =>
+      repo.tournament.raceEngine2.getResults().take(3).toList();
+
+  Map<String, Driver> getFinalLeaderboardDrivers() {
+    final finalEntries = repo.tournament.getFinalLeaderboard();
+
+    return {
+      for (final entry in finalEntries) entry.position.toString(): entry.driver,
+    };
   }
 
   void resetTournament() {

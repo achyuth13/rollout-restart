@@ -25,6 +25,7 @@ class TournamentScreen extends StatefulWidget {
 }
 
 class _TournamentScreenState extends State<TournamentScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,14 +37,21 @@ class _TournamentScreenState extends State<TournamentScreen> {
          children: [
            Center(
              child: CustomElevatedButton(
-               onPressed: () => context.push(
-                 '/drivers',
-                 extra: {
-                   'drivers': widget.tournamentCubit.repo.rosterSheet.drivers,
-                   'appBarTitle': 'Driver Roster',
-                 },
-               ),
-               text: "See drivers",
+               onPressed: () {
+                 final driverList = widget.tournamentCubit.repo.rosterSheet.drivers;
+                 final driverMap = {
+                   for (int i = 0; i < driverList.length; i++) '${i + 1}': driverList[i],
+                 };
+                 context.push(
+                   '/drivers',
+                   extra: {
+                     'drivers': driverMap,
+                     'appBarTitle': 'Driver Roster',
+                     'finalRace': false,
+                   },
+                 );
+               },
+               text: "Drivers Roster",
              ),
            ),
            const SizedBox(height: 20.0),
