@@ -20,7 +20,6 @@ class RaceViewScreen extends StatelessWidget {
         builder: (context, state) {
           final progressMap = state.progress;
           final isFinished = state.isFinished;
-
           return Column(
             children: [
               Expanded(
@@ -43,36 +42,6 @@ class RaceViewScreen extends StatelessWidget {
           );
         });
   }
-}
-
-Widget _buildDriversColumn(DriverProgress dp) {
-  final progress = (dp.distanceCovered / 300).clamp(0.0, 1.0);
-
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: [
-      Expanded(
-          child: RotatedBox(
-        quarterTurns: -1,
-        child: LinearProgressIndicator(
-          value: progress,
-          minHeight: 20,
-          color: dp.driver.team.color,
-          backgroundColor: Colors.grey.shade300,
-        ),
-      )),
-      const SizedBox(height: 8),
-      SizedBox(
-        width: 60,
-        child: Text(
-          dp.driver.name,
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 12),
-          overflow: TextOverflow.ellipsis,
-        ),
-      )
-    ],
-  );
 }
 
 Widget _buildAnimatedDriversColumn(DriverProgress dp, Track raceTrack) {

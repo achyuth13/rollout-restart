@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:rollout_restart/screens/race_view_screen.dart';
 import 'package:rollout_restart/viewmodel/race_cubit.dart';
+import 'package:rollout_restart/widgets/count_down_widget.dart';
+import 'package:rollout_restart/widgets/race_view_footer.dart';
 
-import '../rosters/roster_sheet.dart';
 import '../viewmodel/tournament_cubit.dart';
 import '../viewmodel/tournament_state.dart';
-import '../widgets/custom_elevated_button.dart';
 import '../widgets/top_performers_banner.dart';
 
 class RaceViewHostScreen extends StatefulWidget {
@@ -66,9 +65,13 @@ class _RaceViewHostScreenState extends State<RaceViewHostScreen> {
                     title: _showRace1
                         ? "Top Performers - Race 2"
                         : "Top Performers - Race 1",
-                      topPerformers: _showRace1
-                          ? context.read<TournamentCubit>().getTopPerformersForRace2()
-                          : context.read<TournamentCubit>().getTopPerformersForRace1(),
+                    topPerformers: _showRace1
+                        ? context
+                            .read<TournamentCubit>()
+                            .getTopPerformersForRace2()
+                        : context
+                            .read<TournamentCubit>()
+                            .getTopPerformersForRace1(),
                     onTap: () {
                       setState(() {
                         _showRace1 = !_showRace1;
@@ -88,55 +91,23 @@ class _RaceViewHostScreenState extends State<RaceViewHostScreen> {
                               .tournamentCubit.repo.tournament.race2.track),
                 ),
                 if (state is InitialRacesComplete && !_showFinalRace)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: CustomElevatedButton(
-                          onPressed: () => _showLeaderBoard(context),
-                          text: "Leaderboard",
-                        ),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: CustomElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                _showFinalRace = false;
-                                _showRace1 = true;
-                              });
-                              _startCountdownAndRace();
-                            },
-                            text: "Restart Race",
-                          )),
-                    ],
-                  ),
+                  RaceViewFooter(
+                    actions: {
+                      'restart': () {
+                        setState(() {
+                          _showFinalRace = false;
+                          _showRace1 = true;
+                        });
+                        _startCountdownAndRace();
+                      }
+                    },
+                  )
               ],
             ),
-            if (_countdown > 0)
-              Container(
-                color: Colors.black.withOpacity(0.7),
-                child: Center(
-                  child: Text(
-                    _countdown.toString(),
-                    style: const TextStyle(
-                      fontSize: 100,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              )
+            if (_countdown > 0) CountdownWidget(countdown: _countdown)
           ]);
         },
       ),
     );
   }
-}
-
-void _showLeaderBoard(BuildContext context) {
-  final orderedDrivers = context.read<TournamentCubit>().getFinalLeaderboardDrivers();
-  context.push('/drivers',
-      extra: {'drivers': orderedDrivers, 'appBarTitle': "Final Leaderboard", 'finalRace': true});
 }
